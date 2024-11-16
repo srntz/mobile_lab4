@@ -5,31 +5,21 @@
  * @format
  */
 
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
-import ToDoList from './src/components/ToDoList';
-import ToDoForm from './src/components/ToDoForm';
+import React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import HomePage from './src/screens/HomePage';
+import AboutPage from './src/screens/AboutPage';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [taskList, setTaskList] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog',
-  ]);
-
-  function addTask(name: string) {
-    if (!taskList.includes(name)) {
-      setTaskList(prev => [...prev, name]);
-    } else {
-      throw new Error('Element already exists');
-    }
-  }
-
   return (
-    <SafeAreaView>
-      <ToDoForm addTask={addTask} />
-      <ToDoList taskList={taskList} />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="About" component={AboutPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
